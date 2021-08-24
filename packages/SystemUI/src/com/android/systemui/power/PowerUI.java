@@ -449,9 +449,11 @@ public class PowerUI implements CoreStartable, CommandQueue.Callbacks {
     boolean shouldShowHybridWarning(BatteryStateSnapshot snapshot) {
         if (snapshot.getPlugged()
                 || snapshot.getBatteryStatus() == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-            Slog.d(TAG, "can't show warning due to - plugged: " + snapshot.getPlugged()
-                    + " status unknown: "
-                    + (snapshot.getBatteryStatus() == BatteryManager.BATTERY_STATUS_UNKNOWN));
+            if (DEBUG) {
+                Slog.d(TAG, "can't show warning due to - plugged: " + snapshot.getPlugged()
+                        + " status unknown: "
+                        + (snapshot.getBatteryStatus() == BatteryManager.BATTERY_STATUS_UNKNOWN));
+            }
             return false;
         }
 

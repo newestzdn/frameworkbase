@@ -87,7 +87,7 @@ public class NotificationHistoryManager {
         try {
             NotificationHistoryJobService.scheduleJob(mContext);
         } catch (Throwable e) {
-            Slog.e(TAG, "Failed to schedule cleanup job", e);
+            //Slog.e(TAG, "Failed to schedule cleanup job", e);
         }
         mSettingsObserver.observe();
     }
@@ -98,7 +98,7 @@ public class NotificationHistoryManager {
             final NotificationHistoryDatabase userHistory =
                     getUserHistoryAndInitializeIfNeededLocked(userId);
             if (userHistory == null) {
-                Slog.i(TAG, "Attempted to unlock gone/disabled user " + userId);
+                //Slog.i(TAG, "Attempted to unlock gone/disabled user " + userId);
                 return;
             }
 

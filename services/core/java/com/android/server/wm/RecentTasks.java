@@ -351,22 +351,10 @@ class RecentTasks {
      */
     @VisibleForTesting
     void loadParametersFromResources(Resources res) {
-        if (ActivityManager.isLowRamDeviceStatic()) {
             mMinNumVisibleTasks = res.getInteger(
                     com.android.internal.R.integer.config_minNumVisibleRecentTasks_lowRam);
             mMaxNumVisibleTasks = res.getInteger(
                     com.android.internal.R.integer.config_maxNumVisibleRecentTasks_lowRam);
-        } else if (SystemProperties.getBoolean("ro.recents.grid", false)) {
-            mMinNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_minNumVisibleRecentTasks_grid);
-            mMaxNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_maxNumVisibleRecentTasks_grid);
-        } else {
-            mMinNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_minNumVisibleRecentTasks);
-            mMaxNumVisibleTasks = res.getInteger(
-                    com.android.internal.R.integer.config_maxNumVisibleRecentTasks);
-        }
         final int sessionDurationHrs = res.getInteger(
                 com.android.internal.R.integer.config_activeTaskDurationHours);
         mActiveTasksSessionDurationMs = (sessionDurationHrs > 0)

@@ -35,7 +35,7 @@ public interface MessagingMessage extends MessagingLinearLayout.MessagingChild {
 
     static MessagingMessage createMessage(IMessagingLayout layout,
             Notification.MessagingStyle.Message m, ImageResolver resolver) {
-        return MessagingTextMessage.createMessage(layout, m);
+        return MessagingImageMessage.createMessage(layout, m, resolver);
     }
 
     static void dropCache() {

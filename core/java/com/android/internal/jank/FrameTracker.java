@@ -565,7 +565,7 @@ public class FrameTracker extends SurfaceControl.OnJankDataListener
                 totalFramesCount++;
                 boolean missedFrame = false;
                 if ((info.jankType & JANK_APP_DEADLINE_MISSED) != 0) {
-                    Log.w(TAG, "Missed App frame:" + info + ", CUJ=" + mSession.getName());
+                    Log.v(TAG, "Missed App frame:" + info + ", CUJ=" + mSession.getName());
                     missedAppFramesCount++;
                     missedFrame = true;
                 }
@@ -574,7 +574,7 @@ public class FrameTracker extends SurfaceControl.OnJankDataListener
                         || (info.jankType & JANK_SURFACEFLINGER_GPU_DEADLINE_MISSED) != 0
                         || (info.jankType & SURFACE_FLINGER_SCHEDULING) != 0
                         || (info.jankType & PREDICTION_ERROR) != 0) {
-                    Log.w(TAG, "Missed SF frame:" + info + ", CUJ=" + mSession.getName());
+                    Log.v(TAG, "Missed SF frame:" + info + ", CUJ=" + mSession.getName());
                     missedSfFramesCount++;
                     missedFrame = true;
                 }
@@ -589,14 +589,14 @@ public class FrameTracker extends SurfaceControl.OnJankDataListener
                 // TODO (b/174755489): Early latch currently gets fired way too often, so we have
                 // to ignore it for now.
                 if (!mSurfaceOnly && !info.hwuiCallbackFired) {
-                    Log.w(TAG, "Missing HWUI jank callback for vsyncId: " + info.frameVsyncId
+                    Log.v(TAG, "Missing HWUI jank callback for vsyncId: " + info.frameVsyncId
                             + ", CUJ=" + mSession.getName());
                 }
             }
             if (!mSurfaceOnly && info.hwuiCallbackFired) {
                 maxFrameTimeNanos = Math.max(info.totalDurationNanos, maxFrameTimeNanos);
                 if (!info.surfaceControlCallbackFired) {
-                    Log.w(TAG, "Missing SF jank callback for vsyncId: " + info.frameVsyncId
+                    Log.v(TAG, "Missing SF jank callback for vsyncId: " + info.frameVsyncId
                             + ", CUJ=" + mSession.getName());
                 }
             }

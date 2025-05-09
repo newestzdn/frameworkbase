@@ -1739,7 +1739,6 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                         || !mUserSwitcherController.isSimpleUserSwitcher())
                 && !isShadeDisabled()
                 && ((mDisabled2 & StatusBarManager.DISABLE2_QUICK_SETTINGS) == 0)
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java
                 && !mDozing;
         mQsController.setExpansionEnabledPolicy(expandEnabled);
       if (DEBUG) Log.d(TAG, "updateQsExpansionEnabled - QS Expand enabled: " + expandEnabled);

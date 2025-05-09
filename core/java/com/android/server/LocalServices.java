@@ -18,8 +18,7 @@ package com.android.server;
 
 import com.android.internal.annotations.VisibleForTesting;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import android.util.ArrayMap;
 
 /**
  * This class is used in a similar way as ServiceManager, except the services registered here
@@ -33,8 +32,8 @@ import java.util.concurrent.ConcurrentMap;
 public final class LocalServices {
     private LocalServices() {}
 
-    private static final ConcurrentMap<Class<?>, Object> sLocalServiceObjects =
-            new ConcurrentHashMap<>();
+    private static final ArrayMap<Class<?>, Object> sLocalServiceObjects =
+            new ArrayMap<Class<?>, Object>();
 
     /**
      * Returns a local service instance that implements the specified interface.
@@ -44,15 +43,20 @@ public final class LocalServices {
      */
     @SuppressWarnings("unchecked")
     public static <T> T getService(Class<T> type) {
-        return (T) sLocalServiceObjects.get(type);
+        synchronized (sLocalServiceObjects) {
+            return (T) sLocalServiceObjects.get(type);
+        }
     }
 
     /**
      * Adds a service instance of the specified interface to the global registry of local services.
      */
     public static <T> void addService(Class<T> type, T service) {
-        if (sLocalServiceObjects.putIfAbsent(type, service) != null) {
-            throw new IllegalStateException("Overriding service registration");
+        synchronized (sLocalServiceObjects) {
+            if (sLocalServiceObjects.containsKey(type)) {
+                throw new IllegalStateException("Overriding service registration");
+            }
+            sLocalServiceObjects.put(type, service);
         }
     }
 
@@ -61,6 +65,8 @@ public final class LocalServices {
      */
     @VisibleForTesting
     public static <T> void removeServiceForTest(Class<T> type) {
-        sLocalServiceObjects.remove(type);
+        synchronized (sLocalServiceObjects) {
+            sLocalServiceObjects.remove(type);
+        }
     }
 }
